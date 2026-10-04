@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Skewer - ICT10 Project</title>
+
+    <!-- PyScript -->
+    <link rel="stylesheet" href="https://pyscript.net/releases/2024.1.1/core.css">
+    <script type="module" src="https://pyscript.net/releases/2024.1.1/core.js"></script>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, Helvetica, sans-serif;
+            background: #ffffff;
+            color: #222;
+        }
+
+        .navbar {
+            height: 52px;
+            background: #f85d74;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 28px;
+            font-size: 12px;
+        }
+
+        .brand {
+            font-weight: bold;
+            font-size: 13px;
+        }
+
+        .nav-right {
+            display: flex;
+            gap: 18px;
+            font-size: 10px;
+        }
+
+        .nav-right span {
+            opacity: 0.9;
+        }
+
+
+        .blue-section {
+            min-height: 390px;
+            background: #59d3f2;
+            padding: 35px 20px;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+        }
+
+        .card {
+            width: 300px;
+            background: white;
+            border-radius: 7px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.18);
+        }
+
+        .card-header {
+            height: 80px;
+            background: linear-gradient(110deg, #ffc8f4, #fc6ec8);
+            color: white;
+            text-align: center;
+            padding: 13px 10px;
+        }
+
+        .header-icon {
+            font-size: 15px;
+            margin-bottom: 4px;
+        }
+
+        .card-header h1 {
+            margin: 0;
+            font-size: 14px;
+        }
+
+        .card-header p {
+            margin: 4px 0 0;
+            font-size: 8px;
+            opacity: 0.9;
+        }
+
+        .card-body {
+            padding: 10px;
+        }
+
+        .section-title {
+            font-size: 9px;
+            font-weight: bold;
+            margin-bottom: 7px;
+        }
+
+        .menu-item {
+            height: 27px;
+            border: 1px solid #e8e8e8;
+            border-radius: 3px;
+            margin-bottom: 4px;
+            display: flex;
+            align-items: center;
+            padding: 0 7px;
+            font-size: 8px;
+        }
+
+        .menu-item input {
+            margin-right: 6px;
+            width: 11px;
+            height: 11px;
+            accent-color: #d6e4ff;
+        }
+
+        .price {
+            margin-left: auto;
+            color: #1263db;
+            font-weight: bold;
+        }
+
+        button {
+            border: none;
+            cursor: pointer;
+            color: white;
+            font-weight: bold;
+        }
+
+        .primary-button {
+            width: 100%;
+            height: 30px;
+            border-radius: 4px;
+            margin-top: 5px;
+            background: linear-gradient(90deg, #ffc8f4, #fc6ec8);
+            font-size: 9px;
+        }
+
+        .primary-button:hover {
+            opacity: 0.9;
+        }
+
+
+        .output {
+            border-top: 1px solid #eeeeee;
+            margin-top: 8px;
+            padding-top: 8px;
+            min-height: 45px;
+            text-align: center;
+            color: #888;
+            font-size: 8px;
+        }
+
+        .receipt {
+            text-align: left;
+            color: #222;
+            font-size: 9px;
+        }
+
+        .receipt h3 {
+            text-align: center;
+            margin: 0 0 8px;
+            color: #173b70;
+        }
+
+        .receipt-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 3px 0;
+        }
+
+        .receipt-total {
+            border-top: 1px solid #ddd;
+            margin-top: 5px;
+            padding-top: 5px;
+            font-weight: bold;
+        }
+
+        .divider {
+            height: 12px;
+            background: #222;
+            border-top: 2px solid #eeecec;
+        }
+
+        .sku-section {
+            min-height: 430px;
+            background: #59d3f2;
+            padding: 40px 20px 0;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            position: relative;
+        }
+
+        .sku-card {
+            width: 300px;
+            background: white;
+            border-radius: 7px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.18);
+        }
+
+        .sku-card .card-header {
+            height: 70px;
+        }
+
+        .form-group {
+            margin-bottom: 10px;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 8px;
+            font-weight: bold;
+            margin-bottom: 4px;
+        }
+
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            height: 27px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            padding: 0 7px;
+            font-size: 8px;
+            background: white;
+        }
+
+        .sku-button {
+            width: 100%;
+            height: 29px;
+            border-radius: 4px;
+            background: linear-gradient(90deg, #ffc8f4, #fc6ec8);
+            font-size: 8px;
+        }
+
+        .sku-output {
+            border-top: 1px solid #ddd;
+            margin-top: 8px;
+            padding: 12px 5px;
+            text-align: center;
+            min-height: 38px;
+            font-size: 9px;
+            color: #000000;
+        }
+
+        .generated-sku {
+            font-size: 15px;
+            font-weight: bold;
+            color: #ff2a98;
+            letter-spacing: 1px;
+        }
+
+        .footer {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 28px;
+            background: #f85d74;
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 8px;
+        }
+
+        @media (max-width: 500px) {
+            .navbar {
+                padding: 0 12px;
+            }
+
+            .nav-right {
+                gap: 8px;
+            }
+
+            .card,
+            .sku-card {
+                width: 92%;
+                max-width: 300px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="navbar">
+        <div class="brand">Skewer</div>
+
+        <div class="nav-right">
+            <span>▥ SKU Generator</span>
+            <span>◉ Receipt Generator</span>
+        </div>
+    </div>
+
+
+   <!--receipt ko na hindi gumagana-->
+
+    <section class="blue-section">
+
+        <div class="card">
+
+            <div class="card-header">
+                <div class="header-icon">:)</div>
+                <h1>OBMC Entree Fair</h1>
+            
+            </div>
+
+            <div class="card-body">
+
+                <div class="section-title">
+                    ☷ &nbsp; Menu
+                </div>
+
+                <!-- Item 1 -->
+                <label class="menu-item">
+                    <input type="checkbox" id="item1">
+                    <span>Americano</span>
+                    <span class="price">₱99</span>
+                </label>
+
+                <!-- Item 2 -->
+                <label class="menu-item">
+                    <input type="checkbox" id="item2">
+                    <span>Spanish Latte</span>
+                    <span class="price">₱129</span>
+                </label>
+
+                <!-- Item 3 -->
+                <label class="menu-item">
+                    <input type="checkbox" id="item3">
+                    <span>Cold Brew</span>
+                    <span class="price">₱159</span>
+                </label>
+
+                <!-- Item 4 -->
+                <label class="menu-item">
+                    <input type="checkbox" id="item4">
+                    <span>Affogato</span>
+                    <span class="price">₱159</span>
+                </label>
+
+                <!-- Item 5 -->
+                <label class="menu-item">
+                    <input type="checkbox" id="item5">
+                    <span>Caramel Macchiato</span>
+                    <span class="price">₱129</span>
+                </label>
+
+                <button
+                    class="primary-button"
+                    py-click="create_order()">
+                    ▣ &nbsp; Create Order
+                </button>
+
+                <div class="output" id="show">
+                    Your order summary will appear here. (it wont)
+                </div>
+
+            </div>
+        </div>
+
+    </section>
+    <div class="divider"></div>
+    <section class="sku-section">
+
+        <div class="sku-card">
+
+            <div class="card-header">
+                <div class="header-icon">▥</div>
+                <h1>SKU Generator</h1>
+            </div>
+
+            <div class="card-body">
+
+    
+                <div class="form-group">
+                    <label for="category">
+                        ⚙ Category
+                    </label>
+
+                    <select id="category">
+                        <option value="Perishables">Perishables</option>
+                        <option value="Beverages">Beverages</option>
+                        <option value="Snacks">Snacks</option>
+                        <option value="Supplies">Supplies</option>
+                    </select>
+                </div>
+
+                <!-- Product Name -->
+                <div class="form-group">
+                    <label for="product_name">
+                         Product Name
+                    </label>
+
+                    <input
+                        type="text"
+                        id="product_name"
+                        placeholder="e.g. Bottled Water">
+                </div>
+
+                <!-- Stock Quantity -->
+                <div class="form-group">
+                    <label for="stock_qty">
+                        ▣ Stock Quantity
+                    </label>
+
+                    <input
+                        type="number"
+                        id="stock_qty"
+                        placeholder="e.g. 50"
+                        min="0">
+                </div>
+
+                <button
+                    class="sku-button"
+                    py-click="SKU_generator()">
+                    Generate SKU
+                </button>
+
+                <div class="sku-output" id="sku_output">
+                    Your generated SKU will appear here.(it also wont)
+                </div>
+
+            </div>
+        </div>
+
+        <div class="footer">
+            SKU Generator — 1st Quarter Project
+        </div>
+
+    </section>
+
+    <script type="py" src="./main.py"></script>
+
+</body>
+</html>
